@@ -4,7 +4,7 @@ import ListItem from "./ListItem";
 
 export default async function List() {
     
-    const db = (await connectDB).db("next");
+    const db = (await connectDB).db("forum");
     let result = await db.collection('post').find().toArray();
     
     return (
