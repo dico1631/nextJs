@@ -1,13 +1,15 @@
-import { connectDB } from "@/util/database";
+import { connectDB } from "./database";
 
 export default async function Home() {
-
   const client = await connectDB;
-  const db = client.db("forum");
+  const db = client.db("mongol");
   let result = await db.collection('post').find().toArray();
-  console.log(result);
-
   return (
-    <div>안녕</div>
+    <main>
+
+    <div>
+      안녕dd
+    </div>  
+    </main>
   );
 }
