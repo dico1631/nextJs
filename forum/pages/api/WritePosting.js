@@ -6,7 +6,7 @@ export default async function handler(request,response) {
     if (request.method === 'POST') {
         // 요청으로부터 제목과 내용을 가져옵니다.
         const { title, content } = request.body;        
-        const db = (await connectDB).db("next");
+        const db = (await connectDB).db("forum");
         if(request.body.title == ''){
             return response.status(500).json({ message: "제목쓰셈" });
         }
