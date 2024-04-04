@@ -16,20 +16,17 @@ export default async function ListItem({result}) {
                             <p>{a.content}</p>
                             <Link href={`/edit/${a._id}`}>🪄</Link>
                             <button type='button' onClick={(e)=>{
-                                // fetch('/api/delete', {
-                                //     method : 'POST',
-                                //     body : result[i]._id,
-                                // }).then((r)=>{
-                                //     return r.json();
-                                // }).then(() => {
-                                //     e.target.parentElement.style.opacity = 0;
-                                //     setTimeout(() => {
-                                //         e.target.parentElement.style.display = 'none';
-                                //     }, 1000);
-                                // });
-                                console.log("클릭");
-                                fetch('/api/test');
-                                // fetch('/api/abc/어쩌구');
+                                fetch('/api/delete', {
+                                    method : 'POST',
+                                    body : result[i]._id,
+                                }).then((r)=>{
+                                    return r.json();
+                                }).then(() => {
+                                    e.target.parentElement.style.opacity = 0;
+                                    setTimeout(() => {
+                                        e.target.parentElement.style.display = 'none';
+                                    }, 1000);
+                                });
                             }}> 삭제 </button>
                         </div>
                     )
