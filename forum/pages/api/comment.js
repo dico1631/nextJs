@@ -2,17 +2,14 @@ import { connectDB } from "../../app/database";
 import { ObjectId } from "mongodb";
 
 export default async function handler(request, response) {
-  
     if (request.method === 'POST') {
-        const { content, author, parent } = request.body;
-        console.log(request); 
-        console.log(request.body); 
+        const { content, author, parent } = JSON.parse(request.body);
         const db = (await connectDB).db("forum");
-        if(request.body.content == ''){
+        if(content == ''){
             return response.status(500).json({ message: "댓글 내용이 없어요" });
         }
         
-        if(request.body.author == ''){
+        if(author == ''){
             return response.status(500).json({ message: "로그인하세요" });
         }
         try {

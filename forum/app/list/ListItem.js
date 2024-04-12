@@ -5,7 +5,6 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function ListItem({result}) {
-    console.log(result);
     return (
         <div>
             {
@@ -17,7 +16,7 @@ export default async function ListItem({result}) {
                             <Link href={`/edit/${a._id}`}>🪄</Link>
                             <button type='button' onClick={(e)=>{
                                 fetch('/api/delete', {
-                                    method : 'POST',
+                                    method : 'DELETE',
                                     body : result[i]._id,
                                 }).then((r)=>{
                                     return r.json();
@@ -27,7 +26,7 @@ export default async function ListItem({result}) {
                                         e.target.parentElement.style.display = 'none';
                                     }, 1000);
                                 });
-                            }}> 삭제 </button>
+                            }}>삭제</button>
                         </div>
                     )
                 })
