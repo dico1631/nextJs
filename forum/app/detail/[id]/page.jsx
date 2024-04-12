@@ -3,16 +3,18 @@ import { ObjectId } from "mongodb";
 import Comment from "./Comment";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 
 export default async function Detail(props) {
-  let session = await getServerSession(authOptions);
 
   const db = (await connectDB).db("forum");
   let result = await db.collection('post').findOne({
     _id: new ObjectId(props.params.id)
   } )
-  let comments = await db.collection('comment').find().toArray();
 
+  if(result === null){
+    return notFound();
+  }
 
   return (
     <main>
@@ -20,7 +22,7 @@ export default async function Detail(props) {
       <h4>상세페이지</h4>
       <h4>{result.title}</h4>
       <p>{result.content}</p>
-      <Comment session={session} comments={comments}/>
+      <Comment parentId={result._id.toString()} />
     </div>
     </main>
   );

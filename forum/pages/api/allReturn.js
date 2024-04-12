@@ -1,4 +1,4 @@
-import { connectDB } from "../../app/database";
+import { connectDB } from "@/app/database";
 
 export default async function handler(request,response) {
 

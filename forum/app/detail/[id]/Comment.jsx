@@ -1,19 +1,23 @@
 'use client'
 
-import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Comment({session, comments}){
-  const params = useParams();
+export default function Comment({parentId}){
   let [comment, setComment] = useState('');
-
-  console.log(comments);
+  let [comments, setComments] = useState([]);
 
   const request = {
     content: comment,
-    author: session.user.name,
-    parent: params.id,
+    parent: parentId,
   }
+
+  useEffect(() => {
+    fetch(`/api/comment/list?parentId=${parentId}`).then((r) => r.json())
+    .then((result) => {
+      setComments(result);
+    });
+  }, []);
+
   return(
     <div>
       <div>
@@ -26,7 +30,8 @@ export default function Comment({session, comments}){
       </div>
       <input onChange={(e) => setComment(e.target.value)}/>
       <button onClick={() => {
-        fetch('/api/comment', {method: 'POST', body: JSON.stringify(request)});
+        fetch('/api/comment/new', {method: 'POST', body: JSON.stringify(request)}).then((r) => r.json())
+        .then(({ data }) => setComments((prev) => [...prev, data]));
       }}>댓글전송</button>
     </div>
   );
